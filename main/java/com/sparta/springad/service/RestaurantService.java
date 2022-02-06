@@ -3,7 +3,6 @@ package com.sparta.springad.service;
 import com.sparta.springad.dto.RestaurantDto;
 import com.sparta.springad.model.Restaurant;
 import com.sparta.springad.repository.RestaurantRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
