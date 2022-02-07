@@ -23,7 +23,7 @@ public class FoodService {
 
     // 음식 등록
     @Transactional
-    public void registerFood(Long restaurantId, List<FoodRequestDto> foodRequestDtoList) {
+    public List<FoodResponseDto> registerFood(Long restaurantId, List<FoodRequestDto> foodRequestDtoList) {
         Restaurant restaurant = restaurantRepository.findById(restaurantId)
                 .orElseThrow(NullPointerException::new);
         foodRequestDtoList.stream().forEach(foodRequestDto -> {
@@ -31,6 +31,8 @@ public class FoodService {
             foodRequestDto.setRestaurantId(restaurantId);
             foodRepository.save(foodRequestDto.toEntity(restaurant));
         });
+        return foodRepository.findAllByRestaurantId(restaurantId).stream().map(
+                food -> food.toResponseDto()).collect(Collectors.toList());
     }
 
     // 음식 조회

@@ -4,6 +4,7 @@ import com.sparta.springad.dto.requestDto.FoodRequestDto;
 import com.sparta.springad.dto.reponseDto.FoodResponseDto;
 import com.sparta.springad.service.FoodService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,9 +17,12 @@ public class FoodController {
 
     // 음식 등록
     @PostMapping("/restaurant/{restaurantId}/food/register")
-    public void registerFood(
+    public ResponseEntity<FoodResponseDto> registerFood(
             @PathVariable Long restaurantId, @RequestBody List<FoodRequestDto> foodRequestDtoList) {
-        foodService.registerFood(restaurantId, foodRequestDtoList);
+        List<FoodResponseDto> foodResponseDtoList = foodService.registerFood(restaurantId, foodRequestDtoList);
+        if (foodResponseDtoList == null){
+            throw new IllegalArgumentException();
+        } return ResponseEntity.ok().body(null);
     }
 
     // 음식 조회
