@@ -17,11 +17,11 @@ public class FoodController {
 
     // 음식 등록
     @PostMapping("/restaurant/{restaurantId}/food/register")
-    public ResponseEntity<FoodResponseDto> registerFood(
+    public ResponseEntity<List<FoodResponseDto>> registerFood(
             @PathVariable Long restaurantId, @RequestBody List<FoodRequestDto> foodRequestDtoList) {
         List<FoodResponseDto> foodResponseDtoList = foodService.registerFood(restaurantId, foodRequestDtoList);
         if (foodResponseDtoList == null){
-            throw new IllegalArgumentException();
+            return ResponseEntity.badRequest().body(null);
         } return ResponseEntity.ok().body(null);
     }
 
