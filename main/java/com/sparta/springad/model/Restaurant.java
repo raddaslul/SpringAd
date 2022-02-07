@@ -10,7 +10,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Setter
 @Builder
 public class Restaurant {
 
@@ -29,6 +28,9 @@ public class Restaurant {
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE)
     private List<Food> foodList;
+
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE)
+    private List<Orders> ordersList;
 
     public RestaurantResponseDto toResponseDto(){
         return RestaurantResponseDto.builder()
