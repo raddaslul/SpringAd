@@ -1,17 +1,17 @@
 package com.sparta.springad.model;
 
-import com.sparta.springad.dto.RestaurantDto;
-import com.sparta.springad.validator.RestaurantValidator;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.sparta.springad.dto.reponseDto.RestaurantResponseDto;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Restaurant {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,13 +27,15 @@ public class Restaurant {
     @Column(nullable = false)
     private int deliveryFee;
 
-    public Restaurant (RestaurantDto restaurantDto){
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE)
+    private List<Food> foodList;
 
-        RestaurantValidator.validateRestaurantInput(restaurantDto);
-
-        this.id = restaurantDto.getId();
-        this.name = restaurantDto.getName();
-        this.minOrderPrice = restaurantDto.getMinOrderPrice();
-        this.deliveryFee = restaurantDto.getDeliveryFee();
+    public RestaurantResponseDto toResponseDto(){
+        return RestaurantResponseDto.builder()
+                .id(this.id)
+                .name(this.name)
+                .minOrderPrice(this.minOrderPrice)
+                .deliveryFee(this.deliveryFee)
+                .build();
     }
 }

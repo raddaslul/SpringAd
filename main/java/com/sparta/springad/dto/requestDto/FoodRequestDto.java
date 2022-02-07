@@ -1,4 +1,4 @@
-package com.sparta.springad.dto;
+package com.sparta.springad.dto.requestDto;
 
 import com.sparta.springad.model.Food;
 import com.sparta.springad.model.Restaurant;

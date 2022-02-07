@@ -1,26 +1,33 @@
 package com.sparta.springad.service;
 
-import com.sparta.springad.dto.RestaurantDto;
-import com.sparta.springad.model.Restaurant;
+import com.sparta.springad.dto.reponseDto.RestaurantResponseDto;
+import com.sparta.springad.dto.requestDto.RestaurantRequestDto;
+
 import com.sparta.springad.repository.RestaurantRepository;
+import com.sparta.springad.validator.RestaurantValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
+    private final RestaurantValidator restaurantValidator;
 
-    public Restaurant registerRestaurant(RestaurantDto restaurantDto){
-        Restaurant restaurant = new Restaurant(restaurantDto);
-        restaurantRepository.save(restaurant);
-        return restaurant;
+    // 식당 등록
+    public RestaurantResponseDto registerRestaurant(RestaurantRequestDto restaurantRequestDto){
+        restaurantValidator.validateRestaurantInput(restaurantRequestDto);
+        return restaurantRepository.save(restaurantRequestDto.toEntity()).toResponseDto();
     }
 
-    public List<Restaurant> viewRestaurants(){
-        return restaurantRepository.findAll();
+    // 식당 조회
+    public List<RestaurantResponseDto> viewRestaurants(){
+        return restaurantRepository.findAll().stream().map(
+                restaurant -> restaurant.toResponseDto()).collect(Collectors.toList());
     }
 }

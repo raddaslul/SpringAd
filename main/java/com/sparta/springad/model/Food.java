@@ -1,6 +1,6 @@
 package com.sparta.springad.model;
 
-import com.sparta.springad.dto.FoodResponseDto;
+import com.sparta.springad.dto.reponseDto.FoodResponseDto;
 import lombok.*;
 
 import javax.persistence.*;

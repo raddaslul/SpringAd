@@ -1,6 +1,6 @@
 package com.sparta.springad.validator;
 
-import com.sparta.springad.dto.FoodRequestDto;
+import com.sparta.springad.dto.requestDto.FoodRequestDto;
 import com.sparta.springad.model.Food;
 import com.sparta.springad.model.Restaurant;
 import com.sparta.springad.repository.FoodRepository;

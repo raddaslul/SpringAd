@@ -1,7 +1,7 @@
 package com.sparta.springad.service;
 
-import com.sparta.springad.dto.FoodRequestDto;;
-import com.sparta.springad.dto.FoodResponseDto;
+import com.sparta.springad.dto.requestDto.FoodRequestDto;;
+import com.sparta.springad.dto.reponseDto.FoodResponseDto;
 import com.sparta.springad.model.Restaurant;
 import com.sparta.springad.repository.FoodRepository;
 import com.sparta.springad.repository.RestaurantRepository;

@@ -1,4 +1,4 @@
-package com.sparta.springad.dto;
+package com.sparta.springad.dto.reponseDto;
 
 import lombok.Builder;
 import lombok.Getter;

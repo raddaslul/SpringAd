@@ -1,9 +1,10 @@
 package com.sparta.springad.controller;
 
-import com.sparta.springad.dto.RestaurantDto;
-import com.sparta.springad.model.Restaurant;
+import com.sparta.springad.dto.reponseDto.RestaurantResponseDto;
+import com.sparta.springad.dto.requestDto.RestaurantRequestDto;
 import com.sparta.springad.service.RestaurantService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,13 +19,13 @@ public class RestaurantController {
     private final RestaurantService restaurantService;
 
     @PostMapping("/restaurant/register")
-    public Restaurant registerRestaurant(@RequestBody RestaurantDto restaurantDto){
-        Restaurant restaurant = restaurantService.registerRestaurant(restaurantDto);
-        return restaurant;
+    public ResponseEntity<RestaurantResponseDto> registerRestaurant(@RequestBody RestaurantRequestDto restaurantRequestDto){
+        RestaurantResponseDto restaurantResponseDto = restaurantService.registerRestaurant(restaurantRequestDto);
+        return ResponseEntity.ok().body(restaurantResponseDto);
     }
 
     @GetMapping("/restaurants")
-    public List<Restaurant> viewRestaurants() {
+    public List<RestaurantResponseDto> viewRestaurants() {
         return restaurantService.viewRestaurants();
     }
 }

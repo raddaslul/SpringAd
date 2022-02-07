@@ -1,11 +1,11 @@
-package com.sparta.springad.dto;
+package com.sparta.springad.dto.reponseDto;
 
 import lombok.*;
 
 @Getter
 @Setter
 @Builder
-public class RestaurantDto {
+public class RestaurantResponseDto {
     private Long id;
     private String name;
     private int minOrderPrice;
