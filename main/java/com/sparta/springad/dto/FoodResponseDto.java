@@ -4,10 +4,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+@Builder
 @Getter
 @Setter
-@Builder
-public class FoodDto {
+public class FoodResponseDto {
     private Long id;
     private String name;
     private int price;

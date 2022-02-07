@@ -27,7 +27,7 @@ public class Restaurant {
     @Column(nullable = false)
     private int deliveryFee;
 
-    public Restaurant (RestaurantDto restaurantDto) throws Exception {
+    public Restaurant (RestaurantDto restaurantDto){
 
         RestaurantValidator.validateRestaurantInput(restaurantDto);
 

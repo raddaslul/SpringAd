@@ -18,7 +18,7 @@ public class RestaurantController {
     private final RestaurantService restaurantService;
 
     @PostMapping("/restaurant/register")
-    public Restaurant registerRestaurant(@RequestBody RestaurantDto restaurantDto) throws Exception {
+    public Restaurant registerRestaurant(@RequestBody RestaurantDto restaurantDto){
         Restaurant restaurant = restaurantService.registerRestaurant(restaurantDto);
         return restaurant;
     }

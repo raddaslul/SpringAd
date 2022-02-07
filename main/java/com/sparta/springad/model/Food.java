@@ -1,15 +1,16 @@
 package com.sparta.springad.model;
 
-import com.sparta.springad.dto.FoodDto;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.sparta.springad.dto.FoodResponseDto;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
+@Builder
 public class Food {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,15 +24,14 @@ public class Food {
     private int price;
 
     @ManyToOne
-    @JoinColumn(name = "restaurant", nullable = false)
+    @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
 
-    public Food(List<FoodDto> foodDtoList, Restaurant restaurant) {
-        for (FoodDto foodDto : foodDtoList){
-            this.id = foodDto.getId();
-            this.name = foodDto.getName();
-            this.price = foodDto.getPrice();
-            this.restaurant = restaurant;
-        }
+    public FoodResponseDto toResponseDto() {
+        return FoodResponseDto.builder()
+                .id(this.id)
+                .name(this.name)
+                .price(this.price)
+                .build();
     }
 }

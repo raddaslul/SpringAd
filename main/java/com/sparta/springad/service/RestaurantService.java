@@ -14,7 +14,7 @@ public class RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
 
-    public Restaurant registerRestaurant(RestaurantDto restaurantDto) throws Exception {
+    public Restaurant registerRestaurant(RestaurantDto restaurantDto){
         Restaurant restaurant = new Restaurant(restaurantDto);
         restaurantRepository.save(restaurant);
         return restaurant;
