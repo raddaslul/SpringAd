@@ -27,7 +27,8 @@ public class FoodController {
 
     // 음식 조회
     @GetMapping("/restaurant/{restaurantId}/foods")
-    public List<FoodResponseDto> viewFoods(@PathVariable Long restaurantId) {
-        return foodService.viewFoods(restaurantId);
+    public ResponseEntity<List<FoodResponseDto>> viewFoods(@PathVariable Long restaurantId) {
+        List<FoodResponseDto> foodResponseDtos = foodService.viewFoods(restaurantId);
+        return ResponseEntity.ok().body(foodResponseDtos);
     }
 }

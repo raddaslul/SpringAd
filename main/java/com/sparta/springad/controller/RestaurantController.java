@@ -25,8 +25,9 @@ public class RestaurantController {
     }
 
     @GetMapping("/restaurants")
-    public List<RestaurantResponseDto> viewRestaurants() {
-        return restaurantService.viewRestaurants();
+    public ResponseEntity<List<RestaurantResponseDto>> viewRestaurants() {
+        List<RestaurantResponseDto> restaurantResponseDtos = restaurantService.viewRestaurants();
+        return ResponseEntity.ok().body(restaurantResponseDtos);
     }
 }
 

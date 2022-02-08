@@ -16,16 +16,4 @@ import java.util.List;
 public class OrderRequestDto {
     private Long restaurantId;
     private List<FoodOrderRequestDto> foods;
-
-    public Orders toEntity(Restaurant restaurant){
-        return Orders.builder()
-                .restaurant(restaurant)
-                .build();
-    }
-
-    public FoodOrder toEntity(Food food){
-        return FoodOrder.builder()
-                .food(food)
-                .build();
-    }
 }

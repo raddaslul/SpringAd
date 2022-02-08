@@ -1,7 +1,5 @@
 package com.sparta.springad.model;
 
-import com.sparta.springad.dto.reponseDto.OrderDto;
-import com.sparta.springad.dto.requestDto.OrderRequestDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,7 +23,7 @@ public class Orders {
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
 
-    @OneToMany(mappedBy = "orders", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
     private List<FoodOrder> foodOrderList;
 
     public Orders(int totalPrice, Restaurant restaurant) {

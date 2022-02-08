@@ -27,7 +27,7 @@ public class Food {
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
 
-    @OneToMany(mappedBy = "food", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "food")
     private List<FoodOrder> foodOrderList;
 
     public FoodResponseDto toResponseDto() {

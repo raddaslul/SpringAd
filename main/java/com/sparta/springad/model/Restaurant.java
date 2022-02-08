@@ -26,10 +26,10 @@ public class Restaurant {
     @Column(nullable = false)
     private int deliveryFee;
 
-    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "restaurant")
     private List<Food> foodList;
 
-    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "restaurant")
     private List<Orders> ordersList;
 
     public RestaurantResponseDto toResponseDto(){
