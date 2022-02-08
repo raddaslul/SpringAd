@@ -1,6 +1,6 @@
 package com.sparta.springad.service;
 
-import com.sparta.springad.dto.reponseDto.FoodResponseDto;
+import com.sparta.springad.dto.reponseDto.FoodOrderDto;
 import com.sparta.springad.dto.reponseDto.OrderDto;
 import com.sparta.springad.dto.requestDto.FoodOrderRequestDto;
 import com.sparta.springad.dto.requestDto.OrderRequestDto;
@@ -31,33 +31,41 @@ public class OrderService {
     // 주문 등록하기
     @Transactional
     public OrderDto registerOrder(OrderRequestDto orderRequestDto) {
+        // 식당 확인하기
         Restaurant restaurant = restaurantRepository.findById(orderRequestDto.getRestaurantId())
                 .orElseThrow(NullPointerException::new);
-        int totalPrice = restaurant.getDeliveryFee();
 
-        List<FoodOrder> foodOrderList = new ArrayList<>(); // orders(주문)를 foodOrder(주문 상세)에 넣어주기 위해 선언
+        // 객체 생성시 필요한 파라미터들
+        int quantity = 0; int foodPrice = 0;
+        int totalPrice = restaurant.getDeliveryFee(); // 총 금액에 배달비 포함시킨 채로 선언
+        Food food = new Food();
 
-        List<FoodResponseDto> foodResponseDtoList = new ArrayList<>(); // return 값 주기 위한 코드
+        // return 값 주기 위한 코드
+        List<FoodOrderDto> foods = new ArrayList<>();
 
+        // 주문요청(OrderRequestDto)에 들어있던 주문들어온 음식리스트(Foods)를
+        // 주문상세요청(FoodOrderRequestDto)에 넣어줌
         List<FoodOrderRequestDto> foodOrderRequestDtoList = orderRequestDto.getFoods();
+
         for (FoodOrderRequestDto foodOrderRequestDto : foodOrderRequestDtoList) {
-            Food food = foodRepository.findById(foodOrderRequestDto.getId())
+            food = foodRepository.findById(foodOrderRequestDto.getId())
                     .orElseThrow(NullPointerException::new);
-            int quantity = foodOrderRequestDto.getQuantity();
-            int price = food.getPrice();
-            totalPrice += price * quantity;
+            quantity = foodOrderRequestDto.getQuantity();
+            foodPrice = food.getPrice()*quantity;
+            totalPrice += foodPrice;
 
             FoodOrder foodOrder = FoodOrder.builder() // 빌더를 이용하여 foodOrder(주문상세)에 값 넣어주기
                     .quantity(quantity)
-                    .price(price*quantity)
+                    .price(foodPrice)
                     .food(food)
                     .build();
+            // 빌더를 사용하는 이유 :
+            // Orders(주문)도 FoodOrder(상세주문)의 파라미터인데 Orders는 반복문 밖에서 선언해 줄 것이기 때문에
+            // 필요한 파라미터만 가져다 쓸 수 있는 빌더를 사용해줌
 
-            foodOrderList.add(foodOrder);
-
-            FoodResponseDto foodResponseDto = foodOrder.toResponseDto(); // return 값 주기 위한 코드
-            foodResponseDto.setPrice(price*quantity); // return 값 주기 위한 코드
-            foodResponseDtoList.add(foodResponseDto); // return 값 주기 위한 코드
+            // return 값 주기 위한 코드
+            FoodOrderDto foodOrderDto = new FoodOrderDto(foodOrder);
+            foods.add(foodOrderDto);
         }
 
         // 주문 마스터 저장
@@ -65,18 +73,11 @@ public class OrderService {
         orderRepository.save(orders);
 
         // 주문 상세 저장
-        for (FoodOrder foodOrder : foodOrderList) {
-            FoodOrder tempFoodOrder = FoodOrder.builder()
-                    .orders(orders)
-                    .quantity(foodOrder.getQuantity())
-                    .price(foodOrder.getPrice())
-                    .food(foodOrder.getFood())
-                    .build();
+        FoodOrder foodOrder = new FoodOrder(quantity, foodPrice, orders, food);
+        foodOrderRepository.save(foodOrder);
 
-            foodOrderRepository.save(tempFoodOrder);
-        }
-
-        OrderDto orderDto = new OrderDto(orders, foodResponseDtoList); // return 값 주기 위한 코드
-        return orderDto; // return 값 주기 위한 코드
+        // return 값 주기 위한 코드
+        OrderDto orderDto = new OrderDto(orders, foods);
+        return orderDto;
     }
 }

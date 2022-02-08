@@ -1,7 +1,5 @@
 package com.sparta.springad.model;
 
-import com.sparta.springad.dto.reponseDto.FoodResponseDto;
-import com.sparta.springad.dto.requestDto.FoodOrderRequestDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -31,10 +29,10 @@ public class FoodOrder {
     @JoinColumn(name = "food_id", nullable = false)
     private Food food;
 
-    public FoodResponseDto toResponseDto(){
-        return FoodResponseDto.builder()
-                .id(food.getId())
-                .name(food.getName())
-                .build();
+    public FoodOrder (int quantity, int price, Orders orders, Food food){
+        this.quantity = quantity;
+        this.price = price;
+        this.orders = orders;
+        this.food = food;
     }
 }

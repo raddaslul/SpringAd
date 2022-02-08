@@ -10,11 +10,11 @@ import java.util.List;
 @Setter
 public class OrderDto {
     private String restaurantName;
-    private List<FoodResponseDto> foods;
+    private List<FoodOrderDto> foods;
     private int deliveryFee;
     private int totalPrice;
 
-    public OrderDto(Orders orders, List<FoodResponseDto> foods) {
+    public OrderDto(Orders orders, List<FoodOrderDto> foods) {
         this.restaurantName = orders.getRestaurant().getName();
         this.foods = foods;
         this.deliveryFee = orders.getRestaurant().getDeliveryFee();

@@ -14,6 +14,6 @@ public class FoodOrderDto {
     public FoodOrderDto(FoodOrder foodOrder) {
         this.name = foodOrder.getFood().getName();
         this.quantity = foodOrder.getQuantity();
-        this.price = foodOrder.getFood().getPrice();
+        this.price = foodOrder.getFood().getPrice()*quantity;
     }
 }
