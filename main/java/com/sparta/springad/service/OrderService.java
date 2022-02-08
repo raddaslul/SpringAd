@@ -12,6 +12,7 @@ import com.sparta.springad.repository.FoodOrderRepository;
 import com.sparta.springad.repository.FoodRepository;
 import com.sparta.springad.repository.OrderRepository;
 import com.sparta.springad.repository.RestaurantRepository;
+import com.sparta.springad.validator.OrderValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,7 @@ public class OrderService {
     private final FoodRepository foodRepository;
     private final OrderRepository orderRepository;
     private final FoodOrderRepository foodOrderRepository;
+    private final OrderValidator orderValidator;
 
     // 주문 등록하기
     @Transactional
@@ -53,6 +55,8 @@ public class OrderService {
             quantity = foodOrderRequestDto.getQuantity();
             foodPrice = food.getPrice()*quantity;
             totalPrice += foodPrice;
+
+            orderValidator.validateOrderInput(quantity, foodPrice, restaurant.getMinOrderPrice());
 
             FoodOrder foodOrder = FoodOrder.builder() // 빌더를 이용하여 foodOrder(주문상세)에 값 넣어주기
                     .quantity(quantity)
